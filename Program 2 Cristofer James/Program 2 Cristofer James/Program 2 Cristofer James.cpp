@@ -32,7 +32,8 @@ int main()
 	double height = 0.0;
 	double total_interior_wall_area = 0.0;
 	double total_exterior_wall_area = 0.0;
-	double total_cost = 0.0;
+	double total_int_cost = 0.0;
+	double total_ext_cost = 0.0;
 
 	string get_choice_prompt = "\nWhich option would you like? ";
 	string get_wall_num_prompt = "\n\tHow many walls will be painted? ";
@@ -65,9 +66,9 @@ int main()
 		cout << "\nNumber of cans required to paint the interior walls: "
 			 << num_int_cans << endl;
 
-		total_cost = paint_cost(num_int_cans, INT_PAINT_CAN_COST);
+		total_int_cost = paint_cost(num_int_cans, INT_PAINT_CAN_COST);
 		cout << "\nThe total price to paint the interior walls is : $"
-			<< total_cost << endl;
+			<< total_int_cost << endl;
 
 		break;
 	}
@@ -91,9 +92,9 @@ int main()
 		cout << "\nNumber of cans required to paint the exterior walls: "
 			<< num_ext_cans << endl;
 
-		total_cost = paint_cost(num_ext_cans, EXT_PAINT_CAN_COST);
+		total_ext_cost = paint_cost(num_ext_cans, EXT_PAINT_CAN_COST);
 		cout << "\nThe total price to paint the exterior walls is : $"
-			<< total_cost << endl;
+			<< total_ext_cost << endl;
 
 		break;
 	}
@@ -112,24 +113,22 @@ int main()
 
 		total_exterior_wall_area = total_interior_wall_area;
 
-		cout << "\nTotal exterior and interior wall area to be painted: " 
-			 << total_interior_wall_area + total_exterior_wall_area << " square feet." << endl;
-//FIXME Overview: optimize this section of code to handle this option better and be more readable
-		//Need to create separate variables for interior wall cost and exterior wall cost
-		//Need to copy interior and exterior wall code from above to be performed here
-		//Need to output the cost of the interior and exterior walls separately
-		//Need to output the total cost of the interior and exterior walls together
+		cout << "\nTotal exterior and interior wall area to be painted: "
+			<< total_interior_wall_area + total_exterior_wall_area << " square feet." << endl;
+		//Assigns interior variables with the function calls
 		num_int_cans = cans_required(total_interior_wall_area, PAINT_CAN_COVERAGE);
-		total_cost = paint_cost(num_int_cans, INT_PAINT_CAN_COST);
+		total_int_cost = paint_cost(num_int_cans, INT_PAINT_CAN_COST);
+
+		//Assigns interior variables with the function calls
 		num_ext_cans = cans_required(total_exterior_wall_area, PAINT_CAN_COVERAGE);
-		total_cost += paint_cost(num_ext_cans, EXT_PAINT_CAN_COST);
+		total_ext_cost += paint_cost(num_ext_cans, EXT_PAINT_CAN_COST);
+
 		total_num_cans = num_int_cans + num_ext_cans;
 
 		cout << "\nNumber of cans required to paint the interior and exterior walls: "
 			 << total_num_cans << endl;
 		cout << "\nThe total price to paint both the interior and exterior walls is : $"
-			 << total_cost << endl;
-//ENDFIXME
+			 << total_int_cost + total_ext_cost << endl;
 		break;
 	}
 	default:
@@ -205,7 +204,7 @@ void input_validation(double& user_input_int)
 }
 
 int cans_required(double wall_area, const double coverage)
-{//Calculates and returns the number of paint cans required given wall are and paint can coverage
+{//Calculates and returns the number of paint cans required given wall area and paint can coverage
 	int cans = 0;
 	cans = static_cast<int>(ceil(wall_area / coverage));
 
