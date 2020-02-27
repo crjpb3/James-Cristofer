@@ -74,7 +74,7 @@ void readData(int idNum[], string firstName[], string lastName[], string cityNam
 
 
 int getInput()
-{
+{//Gets input from the user for option selection
 	int userInput;
 	menu();
 	cin >> userInput;
@@ -84,7 +84,7 @@ int getInput()
 }
 
 void validateInput(int& input)
-{
+{//Takes the user input returned by getInput() and validates the user's entry
 	while ((input < 1) || (input > 4))
 	{
 		cout << "\n\tThat input is invalid." << endl << endl;
@@ -163,6 +163,7 @@ void display(int ID[], string first[], string last[], string city[], string stat
 			}
 		}
 
+		//Outputs the lowest alphabetical entry after the inner for loop finds it
 		cout << setw(5) << ID[idx];
 		cout << setw(20) << first[idx];
 		cout << setw(20) << last[idx];
