@@ -1,144 +1,116 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <sstream>//FIXME: stringstream library
+#include <iomanip>//FIXME: stream manipulation library
 #include <cctype>
 using namespace std;
 
-int GetNumOfNonWSCharacters(const string userString)
-{
-    string inputStr = userString;
-    int inputStrSize = inputStr.size();
-    int characterCount = inputStrSize;
-
-    for (int i = 0; i < inputStrSize; i++)
-    {
-        if (inputStr.at(i) == ' ')
-        {
-            characterCount--;
-        }
-    }
-
-    return characterCount;
-}
-
-int GetNumOfWords(string userString)
-{
-    int wordCount = 1;
-    int length = userString.size();
-    string userStr = userString;
-
-    for (int i = 0; i < length; i++)
-    {
-        if (isspace(userStr.at(i)) && !isspace(userStr.at(i + 1)))
-            wordCount++;
-    }
-
-    return wordCount;
-}
-
-int FindText(string stringQuery, string stringQueried)
-{
-    int length = stringQueried.size();
-    int queryMatches = 0;
-    string query = stringQuery;
-
-    while (stringQueried.find(query) != string::npos)
-    {
-        queryMatches++;
-    }
-
-    /*for (int i = 0; i < length; i++)
-    {
-        if (stringQueried.find(query) != string::npos)
-            queryMatches++;
-    }*/
-
-    return queryMatches;
-}
-
-char PrintMenu(string userString)
-{
-    char menuOption;
-    bool isValidEntry = false;
-    string usrStr = userString;
-
-    cout << "\nMENU" << endl;
-    cout << "c - Number of non-whitespace characters" << endl;
-    cout << "w - Number of words" << endl;
-    cout << "f - Find text" << endl;
-    cout << "r - Replace all !'s" << endl;
-    cout << "s - Shorten spaces" << endl;
-    cout << "q - Quit" << endl;
-
-    do
-    {
-        cout << "\nChoose an option:" << endl;
-        cin >> menuOption;
-
-        switch (menuOption)
-        {
-        case 'q':
-        {
-            isValidEntry = true;
-            break;
-        }
-        case 'c':
-        {
-            cout << "Number of non-whitespace characters: " << GetNumOfNonWSCharacters(usrStr) << endl;
-            isValidEntry = true;
-            break;
-        }
-        case 'w':
-        {
-            cout << "Number of words: " << GetNumOfWords(usrStr) << endl;
-            isValidEntry = true;
-            break;
-        }
-        case 'f':
-        {
-            string strQuery;
-            cin.ignore();
-            cout << "Enter a word or phrase to be found: " << endl;
-            cin >> strQuery;
-            cout << "\n\"" << strQuery << "\" instances: " << FindText(strQuery, usrStr);
-            isValidEntry = true;
-            break;
-        }
-        case 'r':
-        case 's':
-        {
-            isValidEntry = true;
-            break;
-        }
-        default:
-        {
-            cout << "Invalid entry" << endl;
-            isValidEntry = false;
-            break;
-        }
-        }
-
-    } while (isValidEntry == false);
-
-
-
-    return menuOption;
-}
-
 int main() {
 
+    int tempInt;
+    int size;
+    int commaCount;
+    string str;
+    string dataTitle;
+    string column1;
+    string column2;
     string userString;
-    char userOption;
+    string tempString;
+    vector<string> dataPointString;
+    vector<int> dataPointInt;
 
-    cout << "Enter a sample text:";
+    cout << "Enter a title for the data:" << endl;
+    getline(cin, dataTitle);
+    cout << "You entered: " << dataTitle << endl << endl;
+
+    cout << "Enter the column 1 header:" << endl;
+    getline(cin, column1);
+    cout << "You entered: " << column1 << endl << endl;
+
+    cout << "Enter the column 2 header:" << endl;
+    getline(cin, column2);
+    cout << "You entered: " << column2 << endl << endl;
+
+    cout << "Enter a data point (-1 to stop input):" << endl;
     getline(cin, userString);
 
-    cout << "\n\nYou entered: " << userString << endl;
-
-    do
+    while (userString != "-1")
     {
-        userOption = PrintMenu(userString);
+        commaCount = 0;
+        str = userString;
+        size = str.size();
 
-    } while (userOption != 'q');/* Type your code here. */
+        if (str.find(',') == string::npos)
+        {
+            cout << "Error: No comma in string." << endl << endl;
+            cout << "Enter a data point (-1 to stop input):" << endl;
+            getline(cin, userString);
+        }
+        else
+        {
+            while (str.find(',') != string::npos)
+            {
+                commaCount++;
+                str.replace(str.find(','), 1, " ");
+            }
+        }
+
+        if (commaCount > 1)
+        {
+            cout << "Error: Too many commas in input." << endl << endl;
+            cout << "Enter a data point (-1 to stop input):" << endl;
+            getline(cin, userString);
+        }
+        else if (commaCount == 1)
+        {
+            size = userString.size();
+
+            istringstream inSS(userString);
+
+            getline(inSS, tempString, ',');
+            inSS >> tempInt;
+
+            if (inSS.fail())
+            {
+                inSS.clear();
+                inSS.ignore(1000, '\n');
+                cout << "Error: Comma not followed by an integer." << endl << endl;
+            }
+            else
+            {
+                dataPointString.push_back(tempString);
+                dataPointInt.push_back(tempInt);
+
+                size = dataPointString.size();
+
+                cout << "Data string: " << dataPointString.at(size - 1) << endl;
+                cout << "Data integer: " << dataPointInt.at(size - 1) << endl << endl;
+            }
+        }
+
+        cout << "Enter a data point (-1 to stop input):" << endl;
+        getline(cin, userString);
+    }
+
+    cout << endl;
+
+    cout << setw(33) << right << dataTitle << endl;
+    cout << setw(20) << left << column1;
+    cout << "|";
+    cout << setw(23) << right << column2 << endl;
+    cout << "--------------------------------------------" << endl;
+
+    for (int a = 0; a < size; a++)
+    {
+        cout << setw(20) << left << dataPointString.at(a);
+        cout << "|";
+        cout << setw(23) << right << dataPointInt.at(a) << endl;
+    }
+
+
+
+    /* Type code here. */
 
     return 0;
 }
