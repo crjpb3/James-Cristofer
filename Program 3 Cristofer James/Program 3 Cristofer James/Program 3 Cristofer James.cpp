@@ -32,7 +32,7 @@ int main()
 	readData(studentID, firstName, lastName, cityName, state, studentGPA);
 
 	do
-	{
+	{//Calls selectionHandling() until isExit is set to true
 		selectionHandling(getInput(), studentID, firstName, lastName, cityName, state, studentGPA);
 
 	} while (!isExit);
@@ -41,7 +41,7 @@ int main()
 }
 
 void menu()
-{
+{//Displays the menu so the user knows the options they can choose from and how to quit the program
 	cout << "\nWelcome to Student Center" << endl;
 	cout << "1- Display Student Info" << endl;
 	cout << "2- Display Student Info sorted by City" << endl;
@@ -51,7 +51,7 @@ void menu()
 }
 
 void readData(int idNum[], string firstName[], string lastName[], string cityName[], string state[], double gpa[])
-{
+{//Reads data from Student_Info.txt and populates the appropriate arrays
 	ifstream inFile;
 	int arrayPos = 0;
 
