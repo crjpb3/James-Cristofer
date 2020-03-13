@@ -1,12 +1,5 @@
 ﻿  BoardClassIMP.cpp
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C3646: 'name': unknown override specifier
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
   Main.cpp
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C3646: 'name': unknown override specifier
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
   PlayerClassIMP.cpp
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C3646: 'name': unknown override specifier
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClass.h(12,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Program 4 Cristofer James\PlayerClassIMP.cpp(6,2): error C2065: 'name': undeclared identifier
-  TileClassIMP.cpp
   Generating Code...
+  Program 4 Cristofer James.vcxproj -> C:\Users\crisr\Documents\School Work\James-Cristofer\Program 4 Cristofer James\Debug\Program 4 Cristofer James.exe

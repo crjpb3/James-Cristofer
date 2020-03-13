@@ -15,12 +15,18 @@ struct Tile
 class Board
 {
 public:
-	void board();
+	Board();
+	Board(Player* p1, Player* p2);
+	void runGame();
+	void createBoard();
 	void printBoard();
-	void verifyTileEmpty(int row, int col);
+	void saveBoard();
+	void verifyTile(int row, int col);
 	void updateTile(int row, int col);
+	void checkWinner();
 
 private:
-	bool isGameOver;
+	Tile tileArray[3][3];
+	Player* players[2];
 };
 #endif
