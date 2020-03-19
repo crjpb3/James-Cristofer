@@ -14,6 +14,7 @@ Board::Board()
 
 Board::Board(Player* p1, Player* p2)
 {//Constructs the Board object
+	srand(time(0));
 	createBoard();
 
 	p1 = new Player;
@@ -24,7 +25,8 @@ Board::Board(Player* p1, Player* p2)
 
 	winner = "Tie";
 
-	runGame();
+	//Initializes the player objects
+	initializePlayers();
 }
 
 Board::~Board()
@@ -38,10 +40,43 @@ Board::~Board()
 
 void Board::runGame()
 {//Runs the game and performs the necessary function calls
-	srand(time(0));
-	
-	int pChar = rand() % 2;
 	int gameTurn;
+
+	for (gameTurn = 0; gameTurn < 9; gameTurn++)
+	{//Runs the game loop
+		int plrRow;
+		int plrCol;
+
+		system("cls");
+		cout << "  \t|_" << players[gameTurn % 2]->getName() << "'s turn_|" << endl << endl;
+		printBoard();
+
+		turnHandling(plrRow, plrCol, gameTurn);
+
+		if ( (gameTurn > 3) && checkWinner() )
+		{//Checks for a winner after turn 4 since a player cannot win before turn 5
+			system("cls");
+			winner = players[gameTurn % 2]->getName();
+			cout << "\n" << setw(9) << "    " << "GAME OVER" << endl << endl;
+			printBoard();
+			cout << setw(4) << "    " << winner << " wins this game" << endl << endl;
+			break;
+		}
+		else
+			if (gameTurn >= 8)
+			{//If no winner has been found by turn 9, the game will be called a draw
+				system("cls");
+				cout << "\n" << setw(9) << "    " << "GAME OVER" << endl << endl;
+				printBoard();
+				cout << setw(4) << "    This game is a tie" << endl << endl;
+				break;
+			}		
+	}
+}
+
+void Board::initializePlayers()
+{//Sets the players' names and game characters
+	int pChar = rand() % 2;
 	string tempName;
 
 	cout << " Enter a name for Player 1: ";
@@ -69,75 +104,6 @@ void Board::runGame()
 	cout << " " << players[1]->getName() << " has been randomly assigned the \'" << players[1]->getChar() << "\' character for this game." << endl << endl;
 	cout << " Press the ENTER key to continue...";
 	cin.get();
-
-	for (gameTurn = 0; gameTurn < 9; gameTurn++)
-	{
-		int plrRow;
-		int plrCol;
-
-		system("cls");
-		cout << "  \t|_" << players[gameTurn % 2]->getName() << "'s turn_|" << endl << endl;
-		printBoard();
-
-		switch (gameTurn % 2)
-		{//Handles the player turns
-		case 0:
-		{//Handles player 1's turn players[0]
-			cout << " Select a row: ";
-			cin >> plrRow;
-			checkRowIndex(plrRow);
-			cout << " Select a column: ";
-			cin >> plrCol;
-			checkColIndex(plrCol);
-			verifyTile(plrRow, plrCol);
-
-			--plrRow;
-			--plrCol;
-			updateTile(plrRow, plrCol, 0);
-			break;
-		}
-		case 1:
-		{//Handles player 2's turn players[1]
-			cout << " Select a row: ";
-			cin >> plrRow;
-			checkRowIndex(plrRow);
-			cout << " Select a column: ";
-			cin >> plrCol;
-			checkColIndex(plrCol);
-			verifyTile(plrRow, plrCol);
-
-			--plrRow;
-			--plrCol;
-			updateTile(plrRow, plrCol, 1);
-			break;
-		}
-		default:
-		{//In the event that somehow case 1 and case 2 are both bypassed, the default nullifies the turn and lets the loop continue
-			cout << "\n\t\tERROR. Restarting this turn." << endl << endl;
-			--gameTurn;
-			break;
-		}
-		}
-
-		if ( (gameTurn > 3) && checkWinner() )
-		{//Checks for a winner after turn 4 since a player cannot win until turn 5
-			system("cls");
-			winner = players[gameTurn % 2]->getName();
-			cout << "\n" << setw(9) << "    " << "GAME OVER" << endl << endl;
-			printBoard();
-			cout << setw(4) << "    " << winner << " wins this game" << endl << endl;
-			break;
-		}
-		else
-			if (gameTurn >= 8)
-			{//If no winner has been found by turn 9, the game will be called a draw
-				system("cls");
-				cout << "\n" << setw(9) << "    " << "GAME OVER" << endl << endl;
-				printBoard();
-				cout << setw(4) << "    This game is a tie" << endl << endl;
-				break;
-			}		
-	}
 }
 
 void Board::checkRowIndex(int& row)
@@ -162,6 +128,49 @@ void Board::checkColIndex(int& col)
 	}
 }
 
+void Board::turnHandling(int& plrRow, int& plrCol, int& gameTurn)
+{//Handles the logic for the player turns
+	switch (gameTurn % 2)
+	{
+	case 0:
+	{//Handles player 1's turn players[0]
+		cout << " Select a row: ";
+		cin >> plrRow;
+		checkRowIndex(plrRow);
+		cout << " Select a column: ";
+		cin >> plrCol;
+		checkColIndex(plrCol);
+		verifyTile(plrRow, plrCol);
+
+		--plrRow;
+		--plrCol;
+		updateTile(plrRow, plrCol, 0);
+		break;
+	}
+	case 1:
+	{//Handles player 2's turn players[1]
+		cout << " Select a row: ";
+		cin >> plrRow;
+		checkRowIndex(plrRow);
+		cout << " Select a column: ";
+		cin >> plrCol;
+		checkColIndex(plrCol);
+		verifyTile(plrRow, plrCol);
+
+		--plrRow;
+		--plrCol;
+		updateTile(plrRow, plrCol, 1);
+		break;
+	}
+	default:
+	{//In the event that somehow case 1 and case 2 are both bypassed, the default nullifies the turn and lets the loop continue
+		cout << "\n\t\tERROR. Restarting this turn." << endl << endl;
+		--gameTurn;
+		break;
+	}
+	}
+}
+
 void Board::createBoard()
 {//Creates new board and initializes each Tile structure's members
 	for (int a = 0; a < 3; a++)
@@ -177,7 +186,7 @@ void Board::createBoard()
 }
 
 void Board::printBoard()
-{//Prints the current board
+{//Prints the current board state
 	cout << setw(9) << players[0]->getName() << ": " << players[0]->getChar() << "\t" << players[1]->getName() << ": " << players[1]->getChar() << endl << endl;
 	cout << "\t " << tileArray[0][0].currChar << " | " << tileArray[0][1].currChar << " | " << tileArray[0][2].currChar << endl;
 	cout << "\t-----------" << endl;

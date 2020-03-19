@@ -30,7 +30,9 @@ private:
 	Tile tileArray[3][3];
 	Player* players[2];
 	string winner;
+	void initializePlayers();
 	void checkRowIndex(int& row);
 	void checkColIndex(int& col);
+	void turnHandling(int& plrRow, int& plrCol, int& gameTurn);
 };
 #endif

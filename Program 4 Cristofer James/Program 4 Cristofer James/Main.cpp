@@ -6,7 +6,7 @@
 using namespace std;
 
 void newGame(bool& quit);
-void resetPtr(Board* board);
+void validateInput(char& input);
 
 int main()
 {
@@ -19,7 +19,10 @@ int main()
 	do
 	{
 		board = new Board(p1, p2);
-		resetPtr(board);
+		board->runGame();
+
+		delete board;
+		board = nullptr;
 		newGame(quitCmnd);
 
 	} while (!quitCmnd);
@@ -30,20 +33,13 @@ int main()
 }
 
 void newGame(bool& quit)
-{
+{//Prompts the user to see if they want to play another game
 	char userInput;
 
 	cin.ignore(INT_MAX, '\n');
 	cout << "Would you like to play again(Y|N): ";
 	cin.get(userInput);
-
-	while ((toupper(userInput) != 'Y') && (toupper(userInput) != 'N'))
-	{
-		cout << endl << endl;
-		cout << "Please enter a valid choice(Y|N): ";
-		cin.get(userInput);
-	}
-	cout << endl << endl;
+	validateInput(userInput);
 
 	if (toupper(userInput) != 'Y')
 		quit = true;
@@ -52,8 +48,13 @@ void newGame(bool& quit)
 	system("cls");
 }
 
-void resetPtr(Board* board)
-{
-	delete board;
-	board = nullptr;
+void validateInput(char& input)
+{//Validates the user's input
+	while ((toupper(input) != 'Y') && (toupper(input) != 'N'))
+	{
+		cout << endl << endl;
+		cout << "Please enter a valid choice(Y|N): ";
+		cin.get(input);
+	}
+	cout << endl << endl;
 }
