@@ -5,7 +5,8 @@ using namespace std;
 
 HourlyEmployee::HourlyEmployee()
 {
-	Employee::Employee();
+	Employee::SetName("0");
+	Employee::SetID("0");
 	this->experiencedEmployee = 'F';
 	this->employeeSalary = 0.0;
 }

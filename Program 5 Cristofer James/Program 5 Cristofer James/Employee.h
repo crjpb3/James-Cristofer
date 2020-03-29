@@ -12,9 +12,9 @@ public:
 	string GetName();
 	void SetID(string employeeID);
 	string GetID();
-	virtual const string GetType();
-	virtual bool ReadData(ifstream& employeeDataIn);
-	virtual const bool WriteData(ofstream& employeeDataOut);
+	virtual string GetType() const;
+	virtual bool ReadData(ifstream& employeeDataIn) const = 0;
+	virtual bool WriteData(ofstream& employeeDataOut) const = 0;
 
 private:
 	string employeeName;

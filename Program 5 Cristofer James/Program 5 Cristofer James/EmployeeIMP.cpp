@@ -30,31 +30,9 @@ string Employee::GetID()
 	return this->employeeID;
 }
 
-string const Employee::GetType()
+string Employee::GetType() const
 {
 	string employeeType = "Employee";
 
 	return employeeType;
-}
-
-bool Employee::ReadData(ifstream& employeeDataIn)
-{
-	getline(employeeDataIn, this->employeeName);
-	getline(employeeDataIn, this->employeeID);
-
-	if (employeeDataIn.good())
-		return true;
-	else
-		return false;
-}
-
-bool const Employee::WriteData(ofstream& employeeDataOut)
-{
-	employeeDataOut << this->employeeName << endl;
-	employeeDataOut << this->employeeID << endl;
-
-	if (employeeDataOut.good())
-		return true;
-	else
-		return false;
 }
