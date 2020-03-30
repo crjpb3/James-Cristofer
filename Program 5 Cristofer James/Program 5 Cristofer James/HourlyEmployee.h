@@ -9,13 +9,13 @@ class HourlyEmployee:public Employee
 {
 public:
 	HourlyEmployee();
-	char GetExpertEmployee() const;
-	double GetSalary() const;
-	virtual string GetType();
 	bool SetExpertEmployee(char newExpert);
+	char GetExpertEmployee() const;
 	bool SetSalary(double newSalary);
-	bool ReadData(ifstream& employeeDataIn);
-	bool WriteData(ofstream& employeeDataOut);
+	double GetSalary() const;
+	virtual string GetType() const override;
+	virtual bool ReadData(ifstream& employeeDataIn) override;
+	virtual bool WriteData(ofstream& employeeDataOut) const override;
 
 private:
 	char experiencedEmployee;

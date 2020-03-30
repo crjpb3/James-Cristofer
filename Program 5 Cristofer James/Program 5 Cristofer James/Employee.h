@@ -8,12 +8,12 @@ class Employee
 {
 public:
 	Employee();
-	void SetName(string employeeName);
-	string GetName();
-	void SetID(string employeeID);
-	string GetID();
+	void SetName(const string& employeeName);
+	string GetName() const;
+	void SetID(const string& employeeID);
+	string GetID() const;
 	virtual string GetType() const;
-	virtual bool ReadData(ifstream& employeeDataIn) const = 0;
+	virtual bool ReadData(ifstream& employeeDataIn) = 0;
 	virtual bool WriteData(ofstream& employeeDataOut) const = 0;
 
 private:

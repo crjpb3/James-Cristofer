@@ -1,7 +1,7 @@
 #include "Employee.h"
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <string>
 using namespace std;
 
 Employee::Employee()
@@ -10,22 +10,22 @@ Employee::Employee()
 	this->employeeID = "0";
 }
 
-void Employee::SetName(string employeeName)
+void Employee::SetName(const string& employeeName)
 {
 	this->employeeName = employeeName;
 }
 
-string Employee::GetName()
+string Employee::GetName() const
 {
 	return this->employeeName;
 }
 
-void Employee::SetID(string employeeID)
+void Employee::SetID(const string& employeeID)
 {
 	this->employeeID = employeeID;
 }
 
-string Employee::GetID()
+string Employee::GetID() const
 {
 	return this->employeeID;
 }
@@ -35,4 +35,40 @@ string Employee::GetType() const
 	string employeeType = "Employee";
 
 	return employeeType;
+}
+
+bool Employee::ReadData(ifstream& employeeDataIn)
+{
+	string empName;
+	string empID;
+
+	getline(employeeDataIn, empName);
+	getline(employeeDataIn, empID);
+
+	if (employeeDataIn.good())
+	{
+		SetName(empName);
+		SetID(empID);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool Employee::WriteData(ofstream& employeeDataOut) const
+{
+	employeeDataOut.open("output.txt", ofstream::app);
+	employeeDataOut << GetName() << endl;
+	employeeDataOut << GetID() << endl;
+	
+	if (employeeDataOut.good())
+	{
+		employeeDataOut.close();
+		return true;
+	}
+	else
+	{
+		employeeDataOut.close();
+		return false;
+	}
 }
