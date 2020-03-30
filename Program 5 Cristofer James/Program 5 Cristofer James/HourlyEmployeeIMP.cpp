@@ -28,11 +28,11 @@ char HourlyEmployee::GetExpertEmployee() const
 	return this->experiencedEmployee;
 }
 
-bool HourlyEmployee::SetSalary(double newSalary)
+bool HourlyEmployee::SetSalary(double employeeSalary)
 {
-	if ((newSalary >= 1000) && (newSalary <= 10000))
+	if ((employeeSalary >= 1000) && (employeeSalary <= 10000))
 	{
-		this->employeeSalary = newSalary;
+		this->employeeSalary = employeeSalary;
 		return true;
 	}
 	else
@@ -53,22 +53,23 @@ string HourlyEmployee::GetType() const
 
 bool HourlyEmployee::ReadData(ifstream& employeeDataIn)
 {
-	double empSalary;
 	char expertVal;
+	double empSalary;
 
 	Employee::ReadData(employeeDataIn);
-	cin.get(expertVal);
-	cin.ignore(INT_MAX, '\n');
-	cin >> empSalary;
+	employeeDataIn >> expertVal;
+	employeeDataIn >> empSalary;
 
-	if (employeeDataIn.good())
+	if (employeeDataIn)
 	{
 		SetExpertEmployee(expertVal);
 		SetSalary(empSalary);
 		return true;
 	}
 	else
+	{
 		return false;
+	}
 }
 
 bool HourlyEmployee::WriteData(ofstream& employeeDataOut) const
@@ -77,7 +78,7 @@ bool HourlyEmployee::WriteData(ofstream& employeeDataOut) const
 	employeeDataOut << GetExpertEmployee() << endl;
 	employeeDataOut << GetSalary() << endl;
 
-	if (employeeDataOut.good())
+	if (employeeDataOut)
 		return true;
 	else
 		return false;

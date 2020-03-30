@@ -16,43 +16,68 @@ int main()
 	ofstream fout;
 	Employee* employees[100]{ NULL };
 
-	char empType;
-	int empNum = 0;
-	int totalHourlyEmp = 0;
-	int totalMonthlyEmp = 0;
-	int totalEmp;
+	char empType; //Used by the switch statement to determine the employee type
+	int empNum = 0; //Used for iterating through the employees[] array and for getting the total number of employee entries
+	int totalHourlyEmp = 0; //Keeps track of total number of Hourly Employees
+	int totalMonthlyEmp = 0; //Keeps track of total number of Monthly Employees
 
 	fin.open("input.txt");
 	fin >> empType;
 
 	while (!fin.eof())
-	{
-		if (toupper(empType) == 'H')
+	{//Reads through the employee data file
+		fin.ignore(INT_MAX, '\n'); //removes the newline character left in the stream by "fin >> empType;" so the getline() functions in ReadData() pull the proper inputs
+
+		switch (toupper(empType))
 		{
+		case 'H':
+		{//Handles Hourly Employee entries
 			employees[empNum] = new HourlyEmployee;
 			employees[empNum]->ReadData(fin);
-			totalHourlyEmp++;
+			totalHourlyEmp++; //Increment the number of Hourly Employees
+			break;
 		}
-		else
-			if (toupper(empType) == 'M')
-			{
-				employees[empNum] = new MonthlyEmployee;
-				employees[empNum]->ReadData(fin);
-				totalMonthlyEmp++;
-			}
-
-		empNum++;
+		case 'M':
+		{//Handles Monthly Employee entries
+			employees[empNum] = new MonthlyEmployee;
+			employees[empNum]->ReadData(fin);
+			totalMonthlyEmp++; //Increment the number of Monthly Employees
+			break;
+		}
+		default:
+		{//If neither 'H' nor 'M' are read for employee type, an error message is displayed and the program exits
+			fin.close();
+			cout << "\n\tThere was an error reading the file." << endl;
+			exit(1);
+		}
+		}
+		empNum++; //Increment the employee number; this line performs one final increment before the loop ends which is equal to the total number of employee entries
+		fin >> empType;
 	}
-
-	totalEmp = empNum + 1;
+	fin.close();
 
 	cout << "There are " << totalHourlyEmp << " hourly employees." << endl;
 	cout << "There are " << totalMonthlyEmp << " monthly employees." << endl;
 
-	for (int a = 0; a < totalEmp; a++)
-	{
-
+	
+	fout.open("output.txt");
+	fout << "\tMonthly Employees" << endl;
+	for (int a = 0; a < empNum; a++)
+	{//Iterate through employees[] to print only the Monthly Employees
+		if(employees[a]->GetType().compare("Monthly Employee") == 0)
+			employees[a]->WriteData(fout);
 	}
+	fout << endl;
+	fout.close();
 
+	fout.open("output.txt", ofstream::app);
+	fout << "\tHourly Employees" << endl;
+	for (int a = 0; a < empNum; a++)
+	{//Iterate through employees[] to print only the Hourly Employees
+		if (employees[a]->GetType().compare("Hourly Employee") == 0)
+			employees[a]->WriteData(fout);
+	}
+	fout.close();
+	
 	return 0;
 }

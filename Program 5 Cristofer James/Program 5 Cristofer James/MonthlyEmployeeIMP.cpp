@@ -32,9 +32,9 @@ bool MonthlyEmployee::ReadData(ifstream& employeeDataIn)
 {
 	int empRank;
 	Employee::ReadData(employeeDataIn);
-	cin >> empRank;
+	employeeDataIn >> empRank;
 	
-	if (employeeDataIn.good())
+	if (employeeDataIn)
 	{
 		SetRank(empRank);
 		return true;
@@ -48,7 +48,7 @@ bool MonthlyEmployee::WriteData(ofstream& employeeDataOut) const
 	Employee::WriteData(employeeDataOut);
 	employeeDataOut << this->employeeRank << endl;
 
-	if (employeeDataOut.good())
+	if (employeeDataOut)
 		return true;
 	else
 		return false;

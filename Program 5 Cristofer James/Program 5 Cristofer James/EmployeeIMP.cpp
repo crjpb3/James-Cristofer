@@ -41,11 +41,10 @@ bool Employee::ReadData(ifstream& employeeDataIn)
 {
 	string empName;
 	string empID;
-
 	getline(employeeDataIn, empName);
 	getline(employeeDataIn, empID);
 
-	if (employeeDataIn.good())
+	if (employeeDataIn)
 	{
 		SetName(empName);
 		SetID(empID);
@@ -57,18 +56,12 @@ bool Employee::ReadData(ifstream& employeeDataIn)
 
 bool Employee::WriteData(ofstream& employeeDataOut) const
 {
-	employeeDataOut.open("output.txt", ofstream::app);
+	
 	employeeDataOut << GetName() << endl;
 	employeeDataOut << GetID() << endl;
 	
-	if (employeeDataOut.good())
-	{
-		employeeDataOut.close();
+	if (employeeDataOut)
 		return true;
-	}
 	else
-	{
-		employeeDataOut.close();
 		return false;
-	}
 }
