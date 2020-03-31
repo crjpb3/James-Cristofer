@@ -14,7 +14,7 @@ int main()
 {
 	ifstream fin;
 	ofstream fout;
-	Employee* employees[100]{ NULL };
+	Employee* employees[100]{ nullptr };
 
 	char empType; //Used by the switch statement to determine the employee type
 	int empNum = 0; //Used for iterating through the employees[] array and for getting the total number of employee entries
@@ -78,6 +78,12 @@ int main()
 			employees[a]->WriteData(fout);
 	}
 	fout.close();
-	
+
+	for (int a = 0; a < empNum; a++)
+	{//Frees the dynamic objects and assigns the used employees[] pointers to nullptr
+		delete employees[a];
+		employees[a] = nullptr;
+	}
+
 	return 0;
 }
