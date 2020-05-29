@@ -65,7 +65,7 @@ int turn(bool &plr_turn)
 	if (toupper(choice) == 'R')
 		die_roll();
 	else
-		turn_change();
+		turn_change(plr_turn);
 
 	return 5;
 }
