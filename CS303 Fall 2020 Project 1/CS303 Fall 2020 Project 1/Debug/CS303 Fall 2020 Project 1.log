@@ -1,0 +1,5 @@
+﻿  AirportIMP.cpp
+  Main.cpp
+C:\Users\crisr\source\repos\CS303 Fall 2020 Project 1\CS303 Fall 2020 Project 1\Main.cpp(28,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  CS303 Fall 2020 Project 1.vcxproj -> C:\Users\crisr\source\repos\CS303 Fall 2020 Project 1\Debug\CS303 Fall 2020 Project 1.exe
